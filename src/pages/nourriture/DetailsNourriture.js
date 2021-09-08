@@ -120,7 +120,7 @@ const Nourriture = props => {
     NourritureDataService.update(currentNourriture.id, currentNourriture)
       .then(response => {
         console.log(response.data);
-        setMessage("The nourriture was updated successfully!");
+        setMessage("Modification reussi!");
       })
       .catch(e => {
         console.log(e);
@@ -260,9 +260,9 @@ const Nourriture = props => {
                 <div className="nourritureUpdateRight">
                     <button className="nourritureAddButton" onClick={updateNourriture}>Modifier</button>
                 </div>
+                <p>{message}</p>
               </div>
             </div>
-          <p>{message}</p>
         </div>
       ) : (
         <div>

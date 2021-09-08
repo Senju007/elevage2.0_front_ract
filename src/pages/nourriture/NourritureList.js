@@ -48,6 +48,7 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../../components/_d
 const TABLE_HEAD = [
   { id: 'id', label: 'Id', alignRight: false },
   { id: 'elevage', label: 'E', alignRight: false },
+  { id: 'nom', label: 'Nom', alignRight: false },
   { id: 'date_debut', label: 'Debut', alignRight: false },
   { id: 'date_fin', label: 'Fin', alignRight: false },
   { id: 'total_journalière', label: 'Qte jr', alignRight: false },
@@ -240,7 +241,7 @@ export default function Nourriture() {
                   {filteredElevages
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, elevage, date_debut, date_fin, total_journalière , quantité_total, prix, etat } = row;
+                      const { id, elevage, nom, date_debut, date_fin, total_journalière , quantité_total, prix, etat } = row;
                       const isItemSelected = selected.indexOf(id) !== -1;
 
                       return (
@@ -267,12 +268,20 @@ export default function Nourriture() {
                           </TableCell>
                           
                           <TableCell align="left">{elevage}</TableCell>
+                          <TableCell align="left">{nom}</TableCell>
                           <TableCell align="left">{date_debut}</TableCell>
                           <TableCell align="left">{date_fin}</TableCell>
                           <TableCell align="left">{total_journalière}</TableCell>
                           <TableCell align="left">{quantité_total}</TableCell>
                           <TableCell align="left">{prix}</TableCell>
-                          <TableCell align="left">{etat ? 'Inachevé' : 'Achevé'}</TableCell>
+                          <TableCell align="left">
+                            <Label
+                              variant="ghost"
+                              color={(etat === 'Terminé' && 'error') || 'success'}
+                            >
+                              {sentenceCase(etat)}
+                            </Label>
+                          </TableCell>
                           <TableCell>
                           
                             
