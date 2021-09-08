@@ -1,5 +1,6 @@
+/* eslint-disable prettier/prettier */
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
@@ -12,10 +13,14 @@ import { MHidden } from '../../components/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
 import account from '../../_mocks_/account';
-
+import AuthService from '../../services/AuthService';
+import CSRFToken from '../../pages/CSRFToken';
 // ----------------------------------------------------------------------
 
+
 const DRAWER_WIDTH = 280;
+
+
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
@@ -32,6 +37,7 @@ const AccountStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.grey[200]
 }));
 
+
 // ----------------------------------------------------------------------
 
 DashboardSidebar.propTypes = {
@@ -41,8 +47,21 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
+  const [user, setUser] = useState([]);
+  const retrieveUser = () => {
+    AuthService.getUser()
+      .then((response) => {
+        setUser(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
 
   useEffect(() => {
+    retrieveUser();
     if (isOpenSidebar) {
       onCloseSidebar();
     }
@@ -61,16 +80,16 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           <Logo />
         </Box>
       </Box>
-
+      
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+              Hello
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+              {account.role}
               </Typography>
             </Box>
           </AccountStyle>
@@ -84,6 +103,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   );
 
   return (
+    
     <RootStyle>
       <MHidden width="lgUp">
         <Drawer
@@ -96,6 +116,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           {renderContent}
         </Drawer>
       </MHidden>
+
 
       <MHidden width="lgDown">
         <Drawer

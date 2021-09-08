@@ -1,11 +1,13 @@
 import { Icon } from '@iconify/react';
 import bugFilled from '@iconify/icons-ant-design/bug-filled';
+import Filter4Icon from '@material-ui/icons/Filter4';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
 import { Card, Typography } from '@material-ui/core';
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
-
+import React, { useState, useEffect } from 'react';
+import { fNumber } from '../../../utils/formatNumber';
+import ElevageServices from '../../../services/ElevageServices';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -34,17 +36,31 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 234;
-
 export default function AppBugReports() {
+  const [nb, setNb] = useState('');
+
+  useEffect(() => {
+    retrievePoulette();
+  }, []);
+
+  const retrievePoulette = () => {
+    ElevageServices.getPondeuseIII()
+      .then((response) => {
+        setNb(response.data.quantité);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon={bugFilled} width={24} height={24} />
+        <Filter4Icon />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">{fNumber(nb)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Bug Reports
+        Stock nourriture pondeuse III
       </Typography>
     </RootStyle>
   );

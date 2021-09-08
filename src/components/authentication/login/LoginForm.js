@@ -6,43 +6,65 @@ import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
-import {
-  Link,
-  Stack,
-  Checkbox,
-  TextField,
-  IconButton,
-  InputAdornment,
-  FormControlLabel
-} from '@material-ui/core';
+import { Stack, TextField, IconButton, InputAdornment } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
-
+import LoginService from '../../../services/LoginServices';
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
+  const initialUserState = {
+    username: '',
+    password: ''
+  };
+  const [submitted, setSubmitted] = useState(false);
+
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
+  const [user, setUser] = useState(initialUserState);
   const LoginSchema = Yup.object().shape({
     password: Yup.string().required('Password is required')
   });
 
+  const saveElevage = () => {
+    const data = {
+      username: user.username,
+      password: user.password
+    };
+
+    LoginService.logIn(data)
+      .then((response) => {
+        setUser({
+          username: response.data.username,
+          password: response.data.password
+        });
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
-      remember: true
+      username: '',
+      password: ''
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
+      saveElevage();
       navigate('/dashboard', { replace: true });
     }
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
   };
 
   return (
@@ -52,15 +74,28 @@ export default function LoginForm() {
           <TextField
             fullWidth
             autoComplete="username"
-            type="email"
-            label="Email address"
-            {...getFieldProps('email')}
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
+            type="text"
+            label="Username"
+            value={user.username}
+            onChange={handleInputChange}
+            name="username"
+            id="username"
+          />
+          <TextField
+            fullWidth
+            autoComplete="password"
+            type="text"
+            label="Password"
+            value={user.password}
+            onChange={handleInputChange}
+            name="password"
+            id="password"
           />
 
           <TextField
             fullWidth
+            name="password"
+            id="password"
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
             label="Password"
@@ -79,16 +114,7 @@ export default function LoginForm() {
           />
         </Stack>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          <FormControlLabel
-            control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-            label="Remember me"
-          />
-
-          <Link component={RouterLink} variant="subtitle2" to="#">
-            Forgot password?
-          </Link>
-        </Stack>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }} />
 
         <LoadingButton
           fullWidth

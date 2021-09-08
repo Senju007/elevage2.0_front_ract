@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import faker from 'faker';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';

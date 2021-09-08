@@ -25,6 +25,11 @@ const sidebarConfig = [
     icon: getIcon(farmIcon)
   },
   {
+    title: 'nourriture',
+    path: '/dashboard/nourritureList',
+    icon: getIcon(shoppingBagFill)
+  },
+  {
     title: 'user',
     path: '/dashboard/user',
     icon: getIcon(peopleFill)
@@ -42,6 +47,11 @@ const sidebarConfig = [
   {
     title: 'login',
     path: '/login',
+    icon: getIcon(lockFill)
+  },
+  {
+    title: 'csrf',
+    path: '/dashboard/csrf',
     icon: getIcon(lockFill)
   }
 ];

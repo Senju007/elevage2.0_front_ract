@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-var */
+/* eslint-disable prettier/prettier */
+/* eslint-disable import/order */
 import React, { useState, useEffect } from "react";
 import ElevageDataService from "../../services/ElevageServices";
-import NourritureDataService from "../../services/NourritureServices";
-import VaccinDataService from "../../services/VaccinServices";
 import {
   CalendarToday,
   LocationSearching,
@@ -12,8 +14,7 @@ import {
   ToggleOn,
   Pets,
 } from "@material-ui/icons";
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
+import { withRouter, Link } from 'react-dom';
 import './elevage.css';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
@@ -47,7 +48,7 @@ const Elevage1 = props => {
   });
 
   const handleChangeEtat = (event) => {
-    const etat = event.target.etat;
+    const {etat} = event.target;
     setState({
       ...state,
       [etat]: event.target.value,
@@ -55,7 +56,7 @@ const Elevage1 = props => {
   };
 
   const handleChangeType = (event) => {
-    const type = event.target.type;
+    const {type} = event.target;
     setState({
       ...state,
       [type]: event.target.value,
@@ -63,7 +64,7 @@ const Elevage1 = props => {
   };
 
   const retrieveNourriture = () => {
-    NourritureDataService.getAll()
+    ElevageDataService.getAll()
       .then(response => {
         setNourriture(response.data);
         console.log(response.data);
@@ -72,7 +73,7 @@ const Elevage1 = props => {
         console.log(e);
       });
   };
-
+//*
   const retrieveVaccin = () => {
     VaccinDataService.getAll()
       .then(response => {

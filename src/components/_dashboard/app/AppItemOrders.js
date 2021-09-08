@@ -1,10 +1,15 @@
+/* eslint-disable import/order */
+/* eslint-disable prettier/prettier */
 import { Icon } from '@iconify/react';
 import windowsFilled from '@iconify/icons-ant-design/windows-filled';
+import Filter3Icon from '@material-ui/icons/Filter3';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
 import { Card, Typography } from '@material-ui/core';
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fNumber } from '../../../utils/formatNumber';
+import React, { useState, useEffect } from 'react';
+import ElevageServices from '../../../services/ElevageServices';
 
 // ----------------------------------------------------------------------
 
@@ -37,14 +42,32 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 const TOTAL = 1723315;
 
 export default function AppItemOrders() {
+
+
+  const [nb, setNb] = useState('');
+  
+    useEffect(() => {
+      retrievePoulette();
+    }, []);
+  
+    const retrievePoulette = () => {
+      ElevageServices.getPondeuseII()
+        .then(response => {
+          setNb(response.data.quantité);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    };
+    
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon={windowsFilled} width={24} height={24} />
+      <Filter3Icon/>
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">{fNumber(nb)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Item Orders
+      Stock nourriture pondeuse II
       </Typography>
     </RootStyle>
   );

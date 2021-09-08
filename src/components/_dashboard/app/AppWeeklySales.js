@@ -1,11 +1,15 @@
+/* eslint-disable no-var */
+/* eslint-disable prettier/prettier */
 import { Icon } from '@iconify/react';
 import androidFilled from '@iconify/icons-ant-design/android-filled';
+import Filter1Icon from '@material-ui/icons/Filter1';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
 import { Card, Typography } from '@material-ui/core';
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
-
+import React, { useState, useEffect } from 'react';
+import ElevageServices from '../../../services/ElevageServices';
+import { fNumber } from '../../../utils/formatNumber';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -34,17 +38,35 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 714000;
+
 
 export default function AppWeeklySales() {
+  
+const [nb , setNb] = useState("")
+
+  useEffect(() => {
+    retrievePoulette();
+    console.log(localStorage.getItem("poulette"))
+  }, []);
+
+  const retrievePoulette = () => {
+    ElevageServices.getPoulette()
+      .then(response => {
+        setNb(response.data.quantité);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon={androidFilled} width={24} height={24} />
+       <Filter1Icon/>
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">{fNumber(nb)} g</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Weekly Sales
+        Stock nourriture poulette
       </Typography>
     </RootStyle>
   );

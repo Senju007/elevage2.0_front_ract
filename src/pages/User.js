@@ -1,12 +1,10 @@
-/* eslint-disable camelcase */
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
-
-import { DeleteOutline } from '@material-ui/icons';
 import { sentenceCase } from 'change-case';
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-dom';
+// material
 import {
   Card,
   Table,
@@ -22,14 +20,6 @@ import {
   TableContainer,
   TablePagination
 } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Alert from '@material-ui/lab/Alert';
-import ElevageDataService from '../services/ElevageServices';
-// material
 // components
 import Page from '../components/Page';
 import Label from '../components/Label';
@@ -42,11 +32,12 @@ import USERLIST from '../_mocks_/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'id', label: 'Id', alignRight: false },
-  { id: 'nb_poulet', label: 'Nb_poulet', alignRight: false },
-  { id: 'type', label: 'Type', alignRight: false },
-  { id: 'etat', label: 'Etat', alignRight: false },
-  { id: 'action', label: 'Action', alignRight: false }
+  { id: 'name', label: 'Name', alignRight: false },
+  { id: 'company', label: 'Company', alignRight: false },
+  { id: 'role', label: 'Role', alignRight: false },
+  { id: 'isVerified', label: 'Verified', alignRight: false },
+  { id: 'status', label: 'Status', alignRight: false },
+  { id: '' }
 ];
 
 // ----------------------------------------------------------------------
@@ -75,10 +66,7 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(
-      array,
-      (_elevage) => _elevage.type.toLowerCase().indexOf(query.toLowerCase()) !== -1
-    );
+    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -90,58 +78,6 @@ export default function User() {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [elevage, setElevage] = useState([]);
-  const [currentElevage, setCurrentElevage] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(-1);
-  const [open, setOpen] = React.useState(false);
-  const [id, setId] = useState(null);
-
-  useEffect(() => {
-    retrieveElevage();
-  }, []);
-
-  const handleClickOpen = (id) => {
-    setOpen(true);
-    setId(id);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const setActiveElevage = (elevage, index) => {
-    setCurrentElevage(elevage);
-    setCurrentIndex(index);
-  };
-
-  const refreshList = () => {
-    retrieveElevage();
-    setCurrentElevage(null);
-    setCurrentIndex(-1);
-  };
-
-  const retrieveElevage = () => {
-    ElevageDataService.getAll()
-      .then((response) => {
-        setElevage(response.data);
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const deleteElevage = (id) => {
-    ElevageDataService.remove(id)
-      .then((response) => {
-        console.log(response.data);
-        handleClose();
-        refreshList();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -151,7 +87,7 @@ export default function User() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = elevage.map((n) => n.name);
+      const newSelecteds = USERLIST.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -189,13 +125,12 @@ export default function User() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - elevage.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-  const filteredElevages = applySortFilter(elevage, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
 
-  const isUserNotFound = filteredElevages.length === 0;
+  const isUserNotFound = filteredUsers.length === 0;
 
-  const newLocal = 'Confirmer la suppression';
   return (
     <Page title="User | Minimal-UI">
       <Container>
@@ -227,17 +162,17 @@ export default function User() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={elevage.length}
+                  rowCount={USERLIST.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredElevages
+                  {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, nb_poulet, type, etat } = row;
-                      const isItemSelected = selected.indexOf(type) !== -1;
+                      const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                      const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
                         <TableRow
@@ -251,24 +186,31 @@ export default function User() {
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
-                              onChange={(event) => handleClick(event, id)}
+                              onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
+                              <Avatar alt={name} src={avatarUrl} />
                               <Typography variant="subtitle2" noWrap>
-                                {id}
+                                {name}
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{nb_poulet}</TableCell>
-                          <TableCell align="left">{type}</TableCell>
-                          <TableCell align="left">{etat ? 'Inachevé' : 'Achevé'}</TableCell>
-                          <TableCell>
-                            <DeleteOutline
-                              // eslint-disable-next-line no-undef
-                              onClick={() => handleClickOpen(id)}
-                            />
+                          <TableCell align="left">{company}</TableCell>
+                          <TableCell align="left">{role}</TableCell>
+                          <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                          <TableCell align="left">
+                            <Label
+                              variant="ghost"
+                              color={(status === 'banned' && 'error') || 'success'}
+                            >
+                              {sentenceCase(status)}
+                            </Label>
+                          </TableCell>
+
+                          <TableCell align="right">
+                            <UserMoreMenu />
                           </TableCell>
                         </TableRow>
                       );
@@ -292,35 +234,10 @@ export default function User() {
             </TableContainer>
           </Scrollbar>
 
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{newLocal}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                <Alert Alert variant="filled" severity="warning">
-                  {' '}
-                  Vous voulez vraiment effacer cette element ??
-                </Alert>
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Annuler
-              </Button>
-              <Button onClick={() => deleteElevage(id)} color="primary" autoFocus>
-                Poursuivre
-              </Button>
-            </DialogActions>
-          </Dialog>
-
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={elevage.length}
+            count={USERLIST.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
