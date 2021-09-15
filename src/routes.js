@@ -12,7 +12,9 @@ import User from './pages/User';
 import CSRFToken from './pages/CSRFToken';
 import Elevage from './pages/elevage/ElevageList';
 import Nourriture from './pages/nourriture/NourritureList';
-import Details from './pages/nourriture/DetailsNourriture';
+import Prevaccin from './pages/pre-vaccination/PrevaccinList';
+import DetailsNourriture from './pages/nourriture/DetailsNourriture';
+import DetailsPrevaccin from './pages/pre-vaccination/DetailsPrevaccin';
 import FormElevage from './pages/elevage/FormElevage';
 import NotFound from './pages/Page404';
 
@@ -31,8 +33,10 @@ export default function Router() {
         { path: 'blog', element: <Blog /> },
         { path: 'elevageList', element: <Elevage /> },
         { path: 'nourritureList', element: <Nourriture /> },
+        { path: 'prevaccinList', element: <Prevaccin /> },
         { path: 'formElevage', element: <FormElevage /> },
-        { path: 'DetailsNourriture/:id', element: <Details /> },
+        { path: 'DetailsNourriture/:id', element: <DetailsNourriture /> },
+        { path: 'DetailsPrevaccin/:id', element: <DetailsPrevaccin /> },
         { path: 'csrf', element: <CSRFToken /> }
       ]
     },

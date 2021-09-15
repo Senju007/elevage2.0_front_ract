@@ -9,6 +9,7 @@ import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import bxFoodTag from '@iconify/icons-bx/bx-food-tag';
+import configIcon from '@iconify/icons-file-icons/config';
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
@@ -28,6 +29,11 @@ const sidebarConfig = [
     title: 'nourriture',
     path: '/dashboard/nourritureList',
     icon: getIcon(bxFoodTag)
+  },
+  {
+    title: 'Pre-vaccination',
+    path: '/dashboard/prevaccinList',
+    icon: getIcon(configIcon)
   },
   {
     title: 'user',

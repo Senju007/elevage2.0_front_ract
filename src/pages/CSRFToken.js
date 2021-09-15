@@ -4,7 +4,11 @@
 /* eslint-disable no-empty */
 /* eslint-disable prefer-template */
 import React, { useState, useEffect } from 'react';
-import AuthService from "../services/AuthService"
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import AuthService from '../services/AuthService'
+
+Cookies.set('foo', 'bar')
 
 const CSRFToken = () => {
     const [csrftoken, setcsrftoken] = useState('');
@@ -21,13 +25,13 @@ const CSRFToken = () => {
                 }
             }
         }
-        return 0;
+        return cookieValue;
     }
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await AuthService.getCookie()
+                await AuthService.getCookie();
             } catch (err) {
 
             }

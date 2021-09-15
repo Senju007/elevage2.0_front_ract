@@ -38,9 +38,9 @@ import NourritureDataService from '../../services/NourrirureServices';
 function renderContent(notification) {
   const nom = (
     <Typography variant="subtitle2">
-      {notification.nom}
+      Nourriture N : {notification.id}
       <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-        &nbsp; {noCase(notification.date_debut)}
+        &nbsp; Prend fin le : {noCase(notification.date_debut)}
       </Typography>
     </Typography>
   );

@@ -6,25 +6,20 @@ import ElevageServices from '../services/ElevageServices';
 // components
 import Page from '../components/Page';
 import {
-  AppTasks,
   AppNewUsers,
-  AppBugReports,
   AppItemOrders,
-  AppNewsUpdate,
   AppWeeklySales,
-  AppOrderTimeline,
   AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
-  AppCurrentSubject,
-  AppConversionRates
+  AppWebsiteVisits
 } from '../components/_dashboard/app';
+
+import CSRFToken from './CSRFToken';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
   return (
-    <Page title="Dashboard | Minimal-UI">
+    <Page title="KAIROS | Elevage">
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Bienvenue</Typography>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@material-ui/core';
+import { Box, Link, Drawer, Typography} from '@material-ui/core';
 // components
 import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
@@ -14,7 +14,6 @@ import { MHidden } from '../../components/@material-extend';
 import sidebarConfig from './SidebarConfig';
 import account from '../../_mocks_/account';
 import AuthService from '../../services/AuthService';
-import CSRFToken from '../../pages/CSRFToken';
 // ----------------------------------------------------------------------
 
 
