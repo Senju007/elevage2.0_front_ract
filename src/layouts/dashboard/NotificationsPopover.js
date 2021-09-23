@@ -32,6 +32,7 @@ import { mockImgAvatar } from '../../utils/mockImages';
 import Scrollbar from '../../components/Scrollbar';
 import MenuPopover from '../../components/MenuPopover';
 import NourritureDataService from '../../services/NourrirureServices';
+import PrevaccinDataService from '../../services/PrevaccinServices';
 
 // ----------------------------------------------------------------------
 
@@ -39,8 +40,10 @@ function renderContent(notification) {
   const nom = (
     <Typography variant="subtitle2">
       Nourriture N : {notification.id}
+      <Box sx={{ mr: 0.1, width: 12, height: 0 }} />
+      Nom : {notification.nom}  
       <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-        &nbsp; Prend fin le : {noCase(notification.date_debut)}
+        &nbsp; Prend fin le : {noCase(notification.date_fin)}
       </Typography>
     </Typography>
   );
@@ -102,24 +105,99 @@ function NotificationItem({ notification }) {
   );
 }
 
+
+function renderContent2(notification) {
+  const nom = (
+    <Typography variant="subtitle2">
+      Soins et prevention N : {notification.id} 
+       <Box sx={{ mr: 0.1, width: 12, height: 0 }} />
+       Nom : {notification.nom}
+
+      <Typography component="span" variant="body2" sx={{ color: 'text.primary' }}>
+        &nbsp; A faire le : {noCase(notification.date_debut)}
+      </Typography>
+    </Typography>
+  );
+
+  if (notification.etat === 'Terminé') {
+    return {
+      nom
+    };
+  }
+  if (notification.etat === 'En cours') {
+    return {
+      nom
+    };
+  }
+  return {
+    nom
+  };
+}
+
+NotificationItem2.propTypes = {
+  notification: PropTypes.object.isRequired
+};
+
+function NotificationItem2({ notification }) {
+  const { nom } = renderContent2(notification);
+
+  return (
+    <ListItemButton
+      to="#"
+      disableGutters
+      component={RouterLink}
+      sx={{
+        py: 1.5,
+        px: 2.5,
+        mt: '1px',
+        ...(notification.etat && {
+          bgcolor: 'action.selected'
+        })
+      }}
+    >
+      <ListItemText
+        primary={nom}
+        secondary={
+          <Typography
+            variant="caption"
+            sx={{
+              mt: 0.5,
+              display: 'flex',
+              alignItems: 'center',
+              color: 'text.disabled'
+            }}
+          >
+            <Box component={Icon} icon={clockFill} sx={{ mr: 0.5, width: 16, height: 16 }} />
+            {formatDistanceToNow(new Date(notification.date_debut))}
+          </Typography>
+        }
+      />
+    </ListItemButton>
+  );
+}
+
 export default function NotificationsPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [nourriture, setNourriture] = useState([]);
-  const totalUnRead = nourriture.filter((item) => item.etat === "En cours").length;
-  const encours = nourriture.filter((item) => item.etat === "En cours").length;
-  const terminer = nourriture.filter((item) => item.etat === "Terminé").length;
+  const [notifications1, setNotifications1] = useState([]);
+  const [notifications2, setNotifications2] = useState([]);
+  const [soins, setSoins] = useState([]);
+  const soinsl = notifications1.length;
+  const nourriturel = notifications2.length;
+  const totalUnRead = soinsl + nourriturel;
  
   useEffect(() => {
     retrieveNourriture();
+    retrieveSoins();
   }, []);
 
+
+
   const retrieveNourriture = () => {
-    NourritureDataService.getAll()
+    NourritureDataService.getFn2j()
       .then(response => {
-        setNourriture(response.data);
-        setNotifications(response.data)
+        setNotifications1(response.data)
         console.log(response.data);
       })
       .catch(e => {
@@ -127,12 +205,24 @@ export default function NotificationsPopover() {
       });
   };
 
+  const retrieveSoins = () => {
+    PrevaccinDataService.getDeb2j()
+      .then(response => {
+        setNotifications2(response.data)
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
+  
 
 
 
   const handleOpen = () => {
     setOpen(true);
+    retrieveNourriture();
   };
 
   const handleClose = () => {
@@ -140,8 +230,8 @@ export default function NotificationsPopover() {
   };
 
   const handleMarkAllAsRead = () => {
-    setNotifications(
-      notifications.map((notification) => ({
+    setNotifications1(
+      notifications1.map((notification) => ({
         ...notification,
         etat: "Terminé"
       }))
@@ -201,8 +291,8 @@ export default function NotificationsPopover() {
               </ListSubheader>
             }
           >
-            {notifications.slice(0, encours).map((notification) => (
-              <NotificationItem key={notification.id} notification={notification} />
+            {notifications1.map((notification1) => (
+              <NotificationItem key={notification1.id} notification={notification1} />
             ))}
           </List>
 
@@ -214,19 +304,14 @@ export default function NotificationsPopover() {
               </ListSubheader>
             }
           >
-            {notifications.slice(encours, 4).map((notification) => (
-              <NotificationItem key={notification.nom} notification={notification} />
+            {notifications2.map((notification2) => (
+              <NotificationItem2 key={notification2.nom} notification={notification2} />
             ))}
           </List>
         </Scrollbar>
 
         <Divider />
 
-        <Box sx={{ p: 1 }}>
-          <Button fullWidth disableRipple component={RouterLink} to="#">
-            View All
-          </Button>
-        </Box>
       </MenuPopover>
     </>
   );

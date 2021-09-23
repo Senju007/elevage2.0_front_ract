@@ -40,8 +40,9 @@ import Page from '../../components/Page';
 import Label from '../../components/Label';
 import Scrollbar from '../../components/Scrollbar';
 import SearchNotFound from '../../components/SearchNotFound';
-import { UserListHead, UserListToolbar } from '../../components/_dashboard/user';
+import { UserListHead} from '../../components/_dashboard/user';
 import { fNumber } from '../../utils/formatNumber';
+import PrevaccinListToolbar from './prevaccinListToolbar';
 //
 
 // ----------------------------------------------------------------------
@@ -87,7 +88,7 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     return filter(
       array,
-      (_elevage) => _elevage.nom.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_prevaccin) => _prevaccin.nom.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
@@ -202,12 +203,12 @@ export default function Prevaccin() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Pre-vaccin
+            Soins et preventions
           </Typography>
         </Stack>
 
         <Card>
-          <UserListToolbar
+          <PrevaccinListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}

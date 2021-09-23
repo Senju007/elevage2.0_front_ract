@@ -13,11 +13,14 @@ const update = (id, data) => http.put(`/prevaccin/${id}`, data);
 const remove = (id) => http.delete(`/prevaccin/${id}`);
 
 const getCount = () => http.get('/prevaccin/nombre');
+
+const getDeb2j = () => http.get('/prevaccin/deb2j')
 export default {
   getAll,
   get,
   create,
   update,
   remove,
-  getCount
+  getCount,
+  getDeb2j
 };

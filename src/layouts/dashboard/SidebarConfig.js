@@ -31,9 +31,24 @@ const sidebarConfig = [
     icon: getIcon(bxFoodTag)
   },
   {
-    title: 'Pre-vaccination',
+    title: 'eau',
+    path: '/dashboard/nourritureList',
+    icon: getIcon(bxFoodTag)
+  },
+  {
+    title: 'Soins et prevention',
     path: '/dashboard/prevaccinList',
     icon: getIcon(configIcon)
+  },
+  {
+    title: 'estimations',
+    path: '/dashboard/nourritureList',
+    icon: getIcon(bxFoodTag)
+  },
+  {
+    title: 'taux de mortalité',
+    path: '/dashboard/nourritureList',
+    icon: getIcon(bxFoodTag)
   },
   {
     title: 'user',
