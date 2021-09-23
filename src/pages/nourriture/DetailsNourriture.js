@@ -120,6 +120,7 @@ const Nourriture = props => {
     NourritureDataService.update(currentNourriture.id, currentNourriture)
       .then(response => {
         console.log(response.data);
+        handleGet();
         setMessage("Modification reussi!");
       })
       .catch(e => {

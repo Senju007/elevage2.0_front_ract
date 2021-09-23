@@ -1,16 +1,15 @@
 /* eslint-disable prettier/prettier */
-import faker from 'faker';
 import PropTypes from 'prop-types';
 import { noCase } from 'change-case';
 import { useRef, useState , useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { set, sub, formatDistanceToNow } from 'date-fns';
+import {formatDistanceToNow } from 'date-fns';
 import { Icon } from '@iconify/react';
 import bellFill from '@iconify/icons-eva/bell-fill';
 import clockFill from '@iconify/icons-eva/clock-fill';
-import doneAllFill from '@iconify/icons-eva/done-all-fill';
 // material
 import { alpha } from '@material-ui/core/styles';
+import Alert from '@material-ui/core//Alert';
 import {
   Box,
   List,
@@ -40,10 +39,10 @@ function renderContent(notification) {
   const nom = (
     <Typography variant="subtitle2">
       Nourriture N : {notification.id}
-      <Box sx={{ mr: 0.1, width: 12, height: 0 }} />
-      Nom : {notification.nom}  
+      <Box sx={{ mr: 0.1, width: 5, height: 0 }} />
+      Nom : {notification.nom}  de l'elevage N: {notification.elevage}
       <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-        &nbsp; Prend fin le : {noCase(notification.date_fin)}
+        &nbsp; <Alert severity="warning">Prend fin le : {noCase(notification.date_fin)}</Alert>
       </Typography>
     </Typography>
   );
@@ -76,8 +75,8 @@ function NotificationItem({ notification }) {
       disableGutters
       component={RouterLink}
       sx={{
-        py: 1.5,
-        px: 2.5,
+        py: 0.5,
+        px: 1.5,
         mt: '1px',
         ...(notification.etat && {
           bgcolor: 'action.selected'
@@ -96,7 +95,7 @@ function NotificationItem({ notification }) {
               color: 'text.disabled'
             }}
           >
-            <Box component={Icon} icon={clockFill} sx={{ mr: 0.5, width: 16, height: 16 }} />
+            <Box component={Icon} icon={clockFill} sx={{ mr: 0.5, width: 5, height: 16 }} />
             {formatDistanceToNow(new Date(notification.date_fin))}
           </Typography>
         }
@@ -110,12 +109,9 @@ function renderContent2(notification) {
   const nom = (
     <Typography variant="subtitle2">
       Soins et prevention N : {notification.id} 
-       <Box sx={{ mr: 0.1, width: 12, height: 0 }} />
-       Nom : {notification.nom}
-
-      <Typography component="span" variant="body2" sx={{ color: 'text.primary' }}>
-        &nbsp; A faire le : {noCase(notification.date_debut)}
-      </Typography>
+       <Box sx={{ mr: 0.1, width: 5, height: 0 }} />
+       {notification.nom} pour l'elevage N: {notification.elevage}
+        &nbsp; <Alert severity="warning">A faire le : {noCase(notification.date_debut)}</Alert>
     </Typography>
   );
 
@@ -147,8 +143,8 @@ function NotificationItem2({ notification }) {
       disableGutters
       component={RouterLink}
       sx={{
-        py: 1.5,
-        px: 2.5,
+        py: 0.5,
+        px: 1.5,
         mt: '1px',
         ...(notification.etat && {
           bgcolor: 'action.selected'
@@ -167,7 +163,7 @@ function NotificationItem2({ notification }) {
               color: 'text.disabled'
             }}
           >
-            <Box component={Icon} icon={clockFill} sx={{ mr: 0.5, width: 16, height: 16 }} />
+            <Box component={Icon} icon={clockFill} sx={{ mr: 0.5, width: 5, height: 5 }} />
             {formatDistanceToNow(new Date(notification.date_debut))}
           </Typography>
         }
@@ -260,7 +256,7 @@ export default function NotificationsPopover() {
         open={open}
         onClose={handleClose}
         anchorEl={anchorRef.current}
-        sx={{ width: 360 }}
+        sx={{ width: 280 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
           <Box sx={{ flexGrow: 1 }}>

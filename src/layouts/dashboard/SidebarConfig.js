@@ -1,15 +1,12 @@
 import { Icon } from '@iconify/react';
 import farmIcon from '@iconify/icons-maki/farm';
 import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
-import homeFill from '@iconify/icons-eva/home-fill';
-import peopleFill from '@iconify/icons-eva/people-fill';
-import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
-import fileTextFill from '@iconify/icons-eva/file-text-fill';
-import lockFill from '@iconify/icons-eva/lock-fill';
-import personAddFill from '@iconify/icons-eva/person-add-fill';
-import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import bxFoodTag from '@iconify/icons-bx/bx-food-tag';
-import configIcon from '@iconify/icons-file-icons/config';
+import waterIcon from '@iconify/icons-maki/water';
+import shieldFill from '@iconify/icons-eva/shield-fill';
+import costEstimateSolid from '@iconify/icons-teenyicons/cost-estimate-solid';
+import chartDeathRateStableNegative from '@iconify/icons-healthicons/chart-death-rate-stable-negative';
+import stockIcon from '@iconify/icons-vaadin/stock';
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
@@ -33,47 +30,27 @@ const sidebarConfig = [
   {
     title: 'eau',
     path: '/dashboard/nourritureList',
-    icon: getIcon(bxFoodTag)
+    icon: getIcon(waterIcon)
   },
   {
     title: 'Soins et prevention',
     path: '/dashboard/prevaccinList',
-    icon: getIcon(configIcon)
+    icon: getIcon(shieldFill)
   },
   {
     title: 'estimations',
     path: '/dashboard/nourritureList',
-    icon: getIcon(bxFoodTag)
+    icon: getIcon(costEstimateSolid)
   },
   {
     title: 'taux de mortalité',
     path: '/dashboard/nourritureList',
-    icon: getIcon(bxFoodTag)
+    icon: getIcon(chartDeathRateStableNegative)
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: getIcon(peopleFill)
-  },
-  {
-    title: 'product',
-    path: '/dashboard/products',
-    icon: getIcon(shoppingBagFill)
-  },
-  {
-    title: 'blog',
-    path: '/dashboard/blog',
-    icon: getIcon(fileTextFill)
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: getIcon(lockFill)
-  },
-  {
-    title: 'csrf',
-    path: '/dashboard/csrf',
-    icon: getIcon(lockFill)
+    title: 'stock',
+    path: '/dashboard/stock',
+    icon: getIcon(stockIcon)
   }
 ];
 
