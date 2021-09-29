@@ -1450,6 +1450,11 @@
   "resolved" "https://registry.npmjs.org/@iconify/icons-bx/-/icons-bx-1.1.2.tgz"
   "version" "1.1.2"
 
+"@iconify/icons-eos-icons@^1.1.7":
+  "integrity" "sha512-GPdzk6uKbjgvVPs7DsSsUgKxWGLClH6iRgh3d1l7seg19esZkklB8wF8dg7Jrtf2FBao1Yywqbz8Es8AiylynA=="
+  "resolved" "https://registry.npmjs.org/@iconify/icons-eos-icons/-/icons-eos-icons-1.1.7.tgz"
+  "version" "1.1.7"
+
 "@iconify/icons-eva@^1.1.0":
   "integrity" "sha512-a2wCJw+6UebrsoJ2WhpHUcdr4PJljwk0tdu1GfpjzwVyiJBC7y6sc2h7as1npJPLwgMIc/q8YFJf5iFl7Ik3NA=="
   "resolved" "https://registry.npmjs.org/@iconify/icons-eva/-/icons-eva-1.1.0.tgz"
@@ -1459,6 +1464,11 @@
   "integrity" "sha512-fzeNv5ZpCSjCLl0DSIsEPYaWnt+71Qs3kzxIyOuuliqWwtP056TVXyGCW46b7UT9kVron9R/7/IPl5As2aBTaQ=="
   "resolved" "https://registry.npmjs.org/@iconify/icons-file-icons/-/icons-file-icons-1.1.7.tgz"
   "version" "1.1.7"
+
+"@iconify/icons-fluent@^1.1.27":
+  "integrity" "sha512-0wIJrJNV4cDlhrXc/bp2NahsWI17++Jnu+ba8MFqS7l5CbXblBxVyGt2ztXyKAm5IhgMbE6O+bBFsbhS376qww=="
+  "resolved" "https://registry.npmjs.org/@iconify/icons-fluent/-/icons-fluent-1.1.27.tgz"
+  "version" "1.1.27"
 
 "@iconify/icons-healthicons@^1.1.4":
   "integrity" "sha512-A6NH47TUb7lAPjWtvqrNHujO3PPNc6c2h0mx3b6E0bfQbfAS5adpyKYOnjhbcdZtJuzRYqUwpONYt8CYWAbPNA=="
@@ -1474,6 +1484,11 @@
   "integrity" "sha512-dtNxRnSwKj54JzJCFeLXd6mKrwWyAxSP+IljN1ofCFh+slVrOVRa0SLZNrscA2qh/TzbkiCtl92hzwzHiMRY6g=="
   "resolved" "https://registry.npmjs.org/@iconify/icons-maki/-/icons-maki-1.1.1.tgz"
   "version" "1.1.1"
+
+"@iconify/icons-mdi@^1.1.30":
+  "integrity" "sha512-srApYrZkEoiQp08bI0N8w7KqPVO2kJGNYbyBgyF5Q4wK6a7cF+bt5xLSwEfIzlq4jBixAtfWo3JhrTcbutGEyA=="
+  "resolved" "https://registry.npmjs.org/@iconify/icons-mdi/-/icons-mdi-1.1.30.tgz"
+  "version" "1.1.30"
 
 "@iconify/icons-teenyicons@^1.1.0":
   "integrity" "sha512-jBrK3vmOEPLrF0vkUwDw7nh1fcoZuINXoC026BfCLqHqvCYI346BXtQIAF+nw1EZn25hX1H0L3bO5lVFxpLkrg=="

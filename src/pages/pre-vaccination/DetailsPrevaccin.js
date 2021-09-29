@@ -16,11 +16,16 @@ import {
   CalendarToday,
   PermIdentity,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Icon } from '@iconify/react';
 import "./prevaccin.css";
 import NativeSelect from '@material-ui/core/NativeSelect';
 import NumberFormat from 'react-number-format';
-
+import Button from '@material-ui/core/Button'
+import needleIcon from '@iconify/icons-mdi/needle';
+import stateIcon from '@iconify/icons-eos-icons/state';
+import animalChicken from '@iconify/icons-healthicons/animal-chicken';
+import textDescription24Regular from '@iconify/icons-fluent/text-description-24-regular';
+import cashIcon from '@iconify/icons-mdi/cash';
 
 const Prevaccin = props => {
   const initialPrevaccinState = {
@@ -136,7 +141,6 @@ const Prevaccin = props => {
         <div className="edit-form">
           <div className="nourritureTitleContainer">
             <h1 className="nourritureTitle">Details </h1>
-              <button className="nourritureAddButton" onClick = {() => handleGet()} >Ajouter</button>
           </div>
             <div className="nourritureContainer">
               <div className="nourritureShow">
@@ -150,11 +154,11 @@ const Prevaccin = props => {
                 <div className="nourritureShowBottom">
                   <span className="nourritureShowTitle">Details</span>
                   <div className="nourritureShowInfo">
-                    <PermIdentity className="nourritureShowIcon" />
+                  <Icon icon={needleIcon} />
                     <span className="nourritureShowInfoTitle">Nom : {currentPrevaccin.nom}</span>
                   </div>
                   <div className="nourritureShowInfo">
-                    <PermIdentity className="nourritureShowIcon" />
+                  <Icon icon={stateIcon} />
                     <span className="nourritureShowInfoTitle">Etat : {currentPrevaccin.etat}</span>
                   </div>
                   <div className="nourritureShowInfo">
@@ -166,17 +170,21 @@ const Prevaccin = props => {
                     <span className="nourritureShowInfoTitle">Fin : {currentPrevaccin.date_fin}</span>
                   </div>
                   <div className="nourritureShowInfo">
+                    <Icon icon={animalChicken} />
                     <span className="nourritureShowInfoTitle">Elevage N : {currentPrevaccin.elevage}</span>
                   </div>
                   <span className="nourritureShowTitle">Plus de details</span>
                   
                   <div className="nourritureShowInfo">
+                    <Icon icon={textDescription24Regular}/>
                     <span className="nourritureShowInfoTitle">Description : {currentPrevaccin.description}</span>
                   </div>
                   <div className="nourritureShowInfo">
+                  <Icon icon={cashIcon}/>
                     <span className="nourritureShowInfoTitle">Prix unitaire : {currentPrevaccin.prix_unitaire} </span>
                   </div>
                   <div className="nourritureShowInfo">
+                  <Icon icon={cashIcon}/>
                     <span className="nourritureShowInfoTitle">Prix total : {currentPrevaccin.prix_unitaire*nbpoulet} </span>
                   </div>
                 </div>
@@ -251,7 +259,9 @@ const Prevaccin = props => {
                 </form>
 
                 <div className="nourritureUpdateRight">
-                    <button className="nourritureAddButton" onClick={updatePrevaccin}>Modifier</button>
+                <Button className="nourritureAddButton" variant="contained" color="success" onClick={updatePrevaccin}>
+                     Modifier
+                </Button>
                 </div>
                 <p>{message}</p>
               </div>

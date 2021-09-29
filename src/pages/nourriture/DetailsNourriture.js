@@ -14,11 +14,16 @@ import {
   CalendarToday,
   PermIdentity,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Icon } from '@iconify/react';
 import "./nourriture.css";
 import NativeSelect from '@material-ui/core/NativeSelect';
+import Button from '@material-ui/core/Button'
 import NumberFormat from 'react-number-format';
-
+import stateIcon from '@iconify/icons-eos-icons/state';
+import weightGram from '@iconify/icons-mdi/weight-gram';
+import cashIcon from '@iconify/icons-mdi/cash';
+import weightKilogram from '@iconify/icons-mdi/weight-kilogram';
+import clipboardSearch from '@iconify/icons-mdi/clipboard-search';
 
 const Nourriture = props => {
   const initialNourritureState = {
@@ -38,11 +43,6 @@ const Nourriture = props => {
   };
   const [currentNourriture, setCurrentNourriture] = useState(initialNourritureState);
   const [message, setMessage] = useState("");
-  const [etat, setEtat] = useState('');
-  const [state, setState] = React.useState({
-    type: 'Poulet de chair',
-    etat: 'En cours',
-  });
 
   const handleChangeEtat = (event) => {
     const etat = event.target.etat;
@@ -135,7 +135,6 @@ const Nourriture = props => {
         <div className="edit-form">
           <div className="nourritureTitleContainer">
             <h1 className="nourritureTitle">Details </h1>
-              <button className="nourritureAddButton" onClick = {() => handleGet()} >Ajouter</button>
           </div>
             <div className="nourritureContainer">
               <div className="nourritureShow">
@@ -153,7 +152,7 @@ const Nourriture = props => {
                     <span className="nourritureShowInfoTitle">Nom : {currentNourriture.nom}</span>
                   </div>
                   <div className="nourritureShowInfo">
-                    <PermIdentity className="nourritureShowIcon" />
+                    <Icon icon={stateIcon} />
                     <span className="nourritureShowInfoTitle">Etat : {currentNourriture.etat}</span>
                   </div>
                   <div className="nourritureShowInfo">
@@ -168,30 +167,41 @@ const Nourriture = props => {
                     <span className="nourritureShowInfoTitle">Elevage N : {currentNourriture.elevage}</span>
                   </div>
                   <span className="nourritureShowTitle">Plus de details</span>
+                  
+                  
+
                   <div className="nourritureShowInfo">
+                    <Icon icon={weightGram} />
                     <span className="nourritureShowInfoTitle">Qte journaliere : {currentNourriture.quantité_journalière} g</span>
                   </div>
                   <div className="nourritureShowInfo">
-                    <span className="nourritureShowInfoTitle">Qte total journaliere : {currentNourriture.total_journalière} g</span>
+                    <Icon icon={weightKilogram} />
+                    <span className="nourritureShowInfoTitle">Qte total journaliere : {currentNourriture.total_journalière/1000} Kg</span>
                   </div>
                   <div className="nourritureShowInfo">
-                    <span className="nourritureShowInfoTitle">Qte total : {currentNourriture.quantité_total} g</span>
+                    <Icon icon={weightKilogram} />
+                    <span className="nourritureShowInfoTitle">Qte total : {currentNourriture.quantité_total/1000} Kg</span>
                   </div>
                   
                   <div className="nourritureShowInfo">
+                    <Icon icon={cashIcon} />
                     <span className="nourritureShowInfoTitle">Prix total : <NumberFormat value={currentNourriture.prix} displayType={'text'} thousandSeparator={true} prefix={'Ar  '}/> </span>
                   </div>
                   <div className="nourritureShowInfo">
-                    <span className="nourritureShowInfoTitle">Poid estimé : {currentNourriture.poids_estimé}</span>
+                    <Icon icon={weightGram} />
+                    <span className="nourritureShowInfoTitle">Poid estimé : {currentNourriture.poids_estimé} g</span>
                   </div>
                   <div className="nourritureShowInfo">
-                    <span className="nourritureShowInfoTitle">Poid prelevé : {currentNourriture.poids_prelevé}</span>
+                    <Icon icon={weightGram} />
+                    <span className="nourritureShowInfoTitle">Poid prelevé : {currentNourriture.poids_prelevé} g</span>
                   </div>
                   <div className="nourritureShowInfo">
+                    <Icon icon={clipboardSearch}/>
                     <span className="nourritureShowInfoTitle">Observation : {currentNourriture.observation}</span>
                   </div>
                 </div>
               </div>
+              
 
 
               <div className="nourritureUpdate">
@@ -199,7 +209,7 @@ const Nourriture = props => {
                 <form className="nourritureUpdateForm">
                   <div className="nourritureUpdateLeft">
                     <div className="nourritureUpdateItem">
-                       <label htmlFor="cin">Prix total (Ar)</label>
+                       <label htmlFor="prix">Prix unitaire :</label>
                         <NumberFormat 
                         thousandsGroupStyle="thousand"
                         value={currentNourriture.prix}
@@ -213,25 +223,31 @@ const Nourriture = props => {
                           const {formattedValue , value} = values
                           setCurrentNourriture({ ...currentNourriture, prix: value });
                         }}
-                        name="nb_poulet"
+                        name="prix_unitaire"
                      />
                    </div>
                      
                    <div className="nourritureUpdateItem">
-                       <label htmlFor="cin">Poids prelevé sur les 10% </label>
-                        <input
-                         type="text"
-                         className="form-control"
-                         id="nb_poulet"
-                         required
-                         value={currentNourriture.poids_prelevé}
-                         onChange={handleChangePoids}
-                         name="nb_poulet"
-                        />
+                       <label htmlFor="poids">Poids prelevé sur les 10% (grammes) </label>
+                       <NumberFormat 
+                        thousandsGroupStyle="thousand"
+                        value={currentNourriture.poids_prelevé}
+                        prefix="g "
+                        decimalSeparator = "."
+                        displayType="input"
+                        type="text"
+                        thousandSeparator={true}
+                        allowNegative={false}
+                        onValueChange={(values) => {
+                          const {formattedValue , value} = values
+                          setCurrentNourriture({ ...currentNourriture, poids_prelevé: value });
+                        }}
+                        name="poids_prelevé"
+                      />
                    </div>
 
                    <div className="nourritureUpdateItem">
-                      <label>Etat</label>
+                      <label>Etat :</label>
                       <NativeSelect
                         value={currentNourriture.etat}
                         onChange={handleChangeEtat}
@@ -259,7 +275,9 @@ const Nourriture = props => {
                 </form>
 
                 <div className="nourritureUpdateRight">
-                    <button className="nourritureAddButton" onClick={updateNourriture}>Modifier</button>
+                    <Button className="nourritureAddButton" variant="contained" color="success" onClick={updateNourriture}>
+                     Modifier
+                    </Button>
                 </div>
                 <p>{message}</p>
               </div>
